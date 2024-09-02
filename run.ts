@@ -4,6 +4,7 @@ import fs from 'fs'
 import { MongoClient } from 'mongodb'
 import dotenv from 'dotenv'
 import path from 'path'
+import { afterEach } from 'node:test';
 
 const envPath = path.resolve(__dirname, '.env.local');
 if (fs.existsSync(envPath)) {
@@ -20,8 +21,13 @@ if (fs.existsSync(envPath)) {
         const db = client.db(process.env.MONGODB_DB);
 
 
-        let collections = await db.collections();
-        console.log(collections.map(c=> c.collectionName))
+        let s = await db.collection("students")
+        await s.insertOne({
+            fname:"afrah",
+            lname:"mohammadi",
+            age:19,
+        })
+       
         
 
     } catch {
